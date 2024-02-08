@@ -7,4 +7,4 @@
  */
 import './styles/app.css';
 
-console.log('Webpack encore is working!! 🎉');
+import 'tw-elements';
