@@ -1,0 +1,8 @@
+<div class="flex justify-center flex-row gap-5 mx-auto">
+	<a href="https://facebook.com/sharer/sharer.php?u={{ absolute_url('post.show', {slug: post.slug}) }}" class="cursor-pointer">
+		<img class="rounded-full w-6" src={{ asset('images/facebook-logo.png') }} alt="facebook logo"/>
+	</a>
+	<a href="https://twitter.com/intent/tweet?text={{ post.title|url_encode}}%20{{ absolute_url('post.show', {slug: post.slug}) }}%20@Symblog" class="cursor-pointer">
+		<img class="rounded-full w-7" src={{ asset('images/logo_Twitter.png') }} alt="facebook logo"/>
+	</a>
+</div>
