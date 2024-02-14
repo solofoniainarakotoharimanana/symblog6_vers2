@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			Symblog -
+			{% block title %}Erreur
+				{{ exception.statusCode}}
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+
+	</head>
+	<body>
+		<div class="flex flex-col items-center">
+			<div class="px-40 py-20 bg-white ">
+				<h3 class="font-bold text-blue-600 text-7xl mb-16">HTTP Erreur
+					{{ exception.statusCode}}</h3>
+				<p class="text-2xl font-bold text-red-600 md:text-3xl mb-16">
+					{{ exception.statusText}}
+				</p>
+				<a href="{{ path('post.index') }}" class="px-6 py-2 text-center text-sm font-semibold text-blue-800 bg-blue-100">
+					Retour à l'accueil
+				</a>
+			</div>
+		</div>
+
+	</body>
+</html>
