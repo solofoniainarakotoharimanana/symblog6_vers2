@@ -2,11 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Tag;
 use App\Entity\Post;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Category;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Post>
@@ -26,16 +28,32 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Get published posts
      * @param int $page
+     * @param Category $category
+     * @param Tag $tag
      * @return PaginationInterface
      */
-    public function findPublished(int $page): PaginationInterface
+    public function findPublished(int $page, ?Category $category, ?Tag $tag): PaginationInterface
     {
         $query = $this->createQueryBuilder("p")
-                      ->andWhere("p.state LIKE :state")
-                      ->setParameter("state", "%STATE_PUBLISHED%")
-                      ->orderBy("p.createdAt","DESC")
-                      ->getQuery()
-                      ->getResult();
+            ->join("p.categories", "c")
+            ->join("p.tags","t")
+            ->andWhere("p.state LIKE :state")
+            ->setParameter("state", "%STATE_PUBLISHED%")
+            ->orderBy("p.createdAt", "DESC");
+                      
+        
+        if ( isset($category) ) {
+            $query = $query->andWhere(':category IN (c)')
+                           ->setParameter('category', $category);
+        }
+
+        if (isset($tag)) {
+            $query = $query->andWhere(':tag IN (t)')
+                           ->setParameter('tag', $tag);
+        }
+
+        $query->getQuery()
+              ->getResult();
         $posts = $this->paginatorInterface->paginate(
             $query,
             $page,

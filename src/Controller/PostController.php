@@ -34,7 +34,7 @@ class PostController extends AbstractController
 
         return $this->render("pages/blog/index.html.twig", 
             [
-                'posts' => $this->postRepository->findPublished($request->query->getInt("page",1))
+                'posts' => $this->postRepository->findPublished($request->query->getInt("page",1), null, null)
             ]
         );
     }

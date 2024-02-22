@@ -8,3 +8,11 @@
 import './styles/app.css';
 
 import 'tw-elements';
+
+import {
+  Dropdown,
+  Ripple,
+  initTE,
+} from "tw-elements";
+
+initTE({ Dropdown, Ripple });

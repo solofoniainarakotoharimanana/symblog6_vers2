@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PostRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -35,11 +37,16 @@ class Post
     #[ORM\Column(type:'string', length: 255)]
     private string $state = Post::STATES[0];
 
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy:'posts')]
+    private Collection $categories;
+
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy:'posts')]
+    private Collection $tags;
+
     #[ORM\Column(type:'datetime_immutable')]
     #[Assert\NotNull()]
     private \DateTimeImmutable $createdAt;
 
-    
     #[ORM\Column(type:'datetime_immutable')]
     #[Assert\NotNull()]
     private \DateTimeImmutable $updatedAt;
@@ -51,6 +58,8 @@ class Post
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -157,6 +166,52 @@ class Post
     public function setThumbnail($thumbnail)
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getCategories(): Collection
+    {
+
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category):self
+    {
+        if( !$this->categories->contains($category))
+        {
+            $this->categories[] = $category;
+            $category->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function getTags(): Collection
+    {
+
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag):self
+    {
+        if( !$this->tags->contains($tag))
+        {
+            $this->tags[] = $tag;
+            $tag->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category):self
+    {
+
+        if (!$this->categories->contains($category))
+        {
+            $category->removePost($this);
+        }
+        
 
         return $this;
     }

@@ -4,25 +4,26 @@ namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping\JoinTable;
-use App\Repository\CategoryRepository;
 use App\Repository\Trait\CategoryTagTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(
     'slug',
     message:'Ce slug existe déjà !!',
 )]
-class Category
+class Tag
 {
-    use CategoryTagTrait;    
-    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'categories')]
-    #[JoinTable(name: 'categories_posts')]
+    use CategoryTagTrait;
+
+    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'tags')]
+    #[JoinTable(name: 'tags_posts')]
     private Collection $posts;
 
     
