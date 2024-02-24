@@ -22,6 +22,7 @@ class PostFaker extends Fixture
 
             $manager->persist($post);
         }
+        
 
         $manager->flush();
     }

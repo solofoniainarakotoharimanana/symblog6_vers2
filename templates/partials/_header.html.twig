@@ -1,12 +1,11 @@
 <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
 <!-- Main navigation container -->
 	<nav class="flex-no-wrap  flex w-full items-center
-            justify-between bg-[#0a1930] py-2 shadow-md shadow-black/5 dark:bg-neutral-600
-
-            dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4
-            fixed top-0 left-0"> 
-        <div
-		    class="flex w-full flex-wrap items-center justify-between px-3">
+														            justify-between bg-[#0a1930] py-2 shadow-md shadow-black/5 dark:bg-neutral-600
+		
+														            dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4
+														            fixed top-0 left-0"> <div
+		class="flex w-full flex-wrap items-center justify-between px-3">
 		<!-- Hamburger button for mobile view -->
 		<button
 			class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden" type="button" data-te-collapse-init data-te-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,33 +30,33 @@
 					class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
 					<!-- Dashboard link -->
 					<a class="text-white transition duration-200
-                        hover:text-neutral-300 hover:ease-in-out
-                        focus:text-neutral-700 disabled:text-black/30
-                        motion-reduce:transition-none dark:text-neutral-200
-                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
-                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400" href="#" data-te-nav-link-ref>
+																																										                        hover:text-neutral-300 hover:ease-in-out
+																																										                        focus:text-neutral-700 disabled:text-black/30
+																																										                        motion-reduce:transition-none dark:text-neutral-200
+																																										                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
+																																										                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400" href="#" data-te-nav-link-ref>
 						Blog
 					</a>
 				</li>
 				<!-- Team link -->
 				<li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
 					<a class="text-white transition duration-200
-                        hover:text-neutral-300 hover:ease-in-out
-                        focus:text-neutral-700 disabled:text-black/30
-                        motion-reduce:transition-none dark:text-neutral-200
-                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
-                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400" href="#" data-te-nav-link-ref>
+																																										                        hover:text-neutral-300 hover:ease-in-out
+																																										                        focus:text-neutral-700 disabled:text-black/30
+																																										                        motion-reduce:transition-none dark:text-neutral-200
+																																										                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
+																																										                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400" href="#" data-te-nav-link-ref>
 						A propos
 					</a>
 				</li>
 				<!-- Projects link -->
 				<li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
 					<a class="text-white transition duration-200
-                        hover:text-neutral-300 hover:ease-in-out
-                        focus:text-neutral-700 disabled:text-black/30
-                        motion-reduce:transition-none dark:text-neutral-200
-                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
-                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400" href="#" data-te-nav-link-ref>
+																																										                        hover:text-neutral-300 hover:ease-in-out
+																																										                        focus:text-neutral-700 disabled:text-black/30
+																																										                        motion-reduce:transition-none dark:text-neutral-200
+																																										                        dark:hover:text-neutral-300 dark:focus:text-neutral-300
+																																										                        lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400" href="#" data-te-nav-link-ref>
 						Contact
 					</a>
 				</li>
@@ -65,27 +64,42 @@
 		</div>
 
 		<!-- Right elements -->
-		<div
-			class="relative flex items-center">
-			<!-- Cart Icon -->
-			<a class="mr-4 text-white transition
-                duration-200 hover:text-neutral-300
-                hover:ease-in-out focus:text-neutral-700
-                disabled:text-black/30 motion-reduce:transition-none
-                dark:text-neutral-200 dark:hover:text-neutral-300
-                dark:focus:text-neutral-300 [&.active]:text-black/90
-                dark:[&.active]:text-neutral-300" href="#">
-				Connexion
-			</a>
-			<a class="mr-4 text-white transition
-                duration-200 hover:text-neutral-300
-                hover:ease-in-out focus:text-neutral-700
-                disabled:text-black/30 motion-reduce:transition-none
-                dark:text-neutral-200 dark:hover:text-neutral-300
-                dark:focus:text-neutral-300 [&.active]:text-black/90
-                dark:[&.active]:text-neutral-300" href="#">
-				Inscription
-			</a>
-		</div>
+		{% if app.user %}
+			<div class="relative flex items-center">
+				<a class="mr-4 text-white transition
+					duration-200 hover:text-neutral-300
+					hover:ease-in-out focus:text-neutral-700
+					disabled:text-black/30 motion-reduce:transition-none
+					dark:text-neutral-200 dark:hover:text-neutral-300
+					dark:focus:text-neutral-300 [&.active]:text-black/90
+					dark:[&.active]:text-neutral-300" href={{ path('security.logout') }}>
+					Déconnexion
+				</a>
+			</div>
+		{% else %}
+
+			<div
+				class="relative flex items-center">
+				<!-- Cart Icon -->
+				<a class="mr-4 text-white transition
+						duration-200 hover:text-neutral-300
+						hover:ease-in-out focus:text-neutral-700
+						disabled:text-black/30 motion-reduce:transition-none
+						dark:text-neutral-200 dark:hover:text-neutral-300
+						dark:focus:text-neutral-300 [&.active]:text-black/90
+						dark:[&.active]:text-neutral-300" href={{ path('security.login')}}>
+					Connexion
+				</a>
+				<a class="mr-4 text-white transition
+						duration-200 hover:text-neutral-300
+						hover:ease-in-out focus:text-neutral-700
+						disabled:text-black/30 motion-reduce:transition-none
+						dark:text-neutral-200 dark:hover:text-neutral-300
+						dark:focus:text-neutral-300 [&.active]:text-black/90
+						dark:[&.active]:text-neutral-300" href="#">
+					Inscription
+				</a>
+			</div>
+		{% endif %}
 	</div>
 </nav>

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#categories input [type="checkbox"] {
+  margin-right: 5rem;
+}
+
+#categories label {
+  margin-right: 0.5rem;
+}

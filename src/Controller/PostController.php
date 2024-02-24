@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +33,27 @@ class PostController extends AbstractController
                         $request->query->getInt("page",1),
                         9
                     );*/
+        $searchData = new SearchData;
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $searchData->page = $request->query->getInt("page", 1);
+            $posts = $this->postRepository->findBySearch($searchData->q, $searchData->page, $searchData->categories);
+
+            return $this->render("pages/blog/index.html.twig", 
+            [
+                'posts' => $posts,
+                'form' => $form->createView(),
+            ]
+        );
+            
+        }
 
         return $this->render("pages/blog/index.html.twig", 
             [
-                'posts' => $this->postRepository->findPublished($request->query->getInt("page",1), null, null)
+                'posts' => $this->postRepository->findPublished($request->query->getInt("page",1), null, null),
+                'form' => $form->createView(),
             ]
         );
     }

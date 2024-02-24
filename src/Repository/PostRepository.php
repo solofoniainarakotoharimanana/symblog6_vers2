@@ -39,7 +39,7 @@ class PostRepository extends ServiceEntityRepository
             ->join("p.tags","t")
             ->andWhere("p.state LIKE :state")
             ->setParameter("state", "%STATE_PUBLISHED%")
-            ->orderBy("p.createdAt", "DESC");
+            ->addOrderBy("p.createdAt", "DESC");
                       
         
         if ( isset($category) ) {
@@ -54,6 +54,36 @@ class PostRepository extends ServiceEntityRepository
 
         $query->getQuery()
               ->getResult();
+        $posts = $this->paginatorInterface->paginate(
+            $query,
+            $page,
+            9
+        );
+
+        return $posts;
+    }
+
+    public function findBySearch(string $search, int $page, array $categories): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('p')
+            ->join('p.categories', 'c')
+            ->andWhere("p.state LIKE :state")
+            ->setParameter("state", "%STATE_PUBLISHED%")
+            ->addOrderBy("p.createdAt", "DESC");
+        if ( !empty($search) ) {
+        $query = $query
+            ->andwhere('p.title LIKE :search')
+            ->orWhere('p.content LIKE :search')
+            ->setParameter('search', '%'.$search.'%');
+        }
+        if ( count($categories) > 0 ) {
+            $query = $query->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $categories);
+        }
+            
+        $query = $query->getQuery()
+            ->getResult();
+
         $posts = $this->paginatorInterface->paginate(
             $query,
             $page,

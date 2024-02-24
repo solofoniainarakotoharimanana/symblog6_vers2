@@ -1,7 +1,7 @@
 {% if badges %}
-	<div class="flex space-x-2 justify-start mr-2 my-2">
+	<div class="flex space-x-2 justify-start mr-2 my-2 flex-wrap">
 		{% for badge in badges %}
-			<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">
+			<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full mb-2">
 				<a href="{{ path('category.index', {slug: badge.slug}) }}">{{ badge.name }}</a>
 			</span>
 		{% endfor %}
