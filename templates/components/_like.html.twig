@@ -4,13 +4,9 @@
 			<a class="flex w-fit" href="{{path('like.post', {id: post.id})}}" data-action="like">
 			{% endif %}
 
-			{% if app.user in post.likes %}
-				<img src="{{ asset('/images/like-blue.png') }}" alt="" width="20" class="cursor-pointer  filled"/>
 
-			{% else %}
-				<img src="{{ asset('/images/like.png') }}" alt="" width="20" class="cursor-pointer  unFilled"/>
-
-			{% endif %}
+			<img src="{{ asset('/images/like-blue.png') }}" alt="" width="20" class="cursor-pointer filled {{ app.user in post.likes ? '' : 'hidden'}}  "/>
+			<img src="{{ asset('/images/like.png') }}" alt="" width="20" class="cursor-pointer unFilled {{ app.user in post.likes ? 'hidden' : ''}} "/>
 
 			<span class="ml-2">
 				{% if post.likes | length > 0 %}

@@ -16,10 +16,16 @@ export default class Like {
     const url = this.href;
     axios.get(url).then((rep) => {
       const nbLikes = rep.data.nbLikes;
-      console.log(nbLikes);
+      console.log(this.querySelector("img"));
       const span = this.querySelector("span");
       this.dataset.nbLikes = nbLikes;
-      span.innerHTML = nbLikes + " J'aime";
+      span.innerHTML = nbLikes > 1 ? nbLikes + " J'aimes" : nbLikes + " J'aime";
+
+      const imgFilled = this.querySelector("img.filled");
+      const imgUnFilled = this.querySelector("img.unFilled");
+
+      imgFilled.classList.toggle("hidden");
+      imgUnFilled.classList.toggle("hidden");
     });
   }
 }

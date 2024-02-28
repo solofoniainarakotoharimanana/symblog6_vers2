@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const likeElements = [].slice.call(
     document.querySelectorAll('a[data-action="like"]')
   );
-  console.log(likeElements);
+  //console.log(likeElements);
   if (likeElements) {
     new Like(likeElements);
   }
