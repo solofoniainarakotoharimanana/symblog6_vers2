@@ -21,6 +21,9 @@ security:
         check_path: security.login
       logout:
         path: security.logout
+      remember_me:
+        secret: "%kernel.secret%"
+        lifetime: 604800
       #provider: users_in_memory
 
       # activate different ways to authenticate
